@@ -27,14 +27,58 @@ Password: `password`
 )
 ```
 
+### Using `generate_series`
+
+The `generate_series` function is essential for generating large sets of mock data. It produces a set of values from a start point to an end point, with an optional step.
+
+**Syntax:**
+`generate_series(start, stop, step)`
+
+*   **start**: The value to start the series at.
+*   **stop**: The value to stop the series (inclusive).
+*   **step**: (Optional) The amount to increment by each step. Defaults to 1.
+
+**Examples:**
+
+1.  **Generate a sequence of numbers:**
+    ```sql
+    SELECT * FROM generate_series(1, 5);
+    ```
+    *Output: 1, 2, 3, 4, 5*
+
+2.  **Generate numbers with a step:**
+    ```sql
+    SELECT * FROM generate_series(1, 10, 2);
+    ```
+    *Output: 1, 3, 5, 7, 9*
+
+3.  **Generate a series of timestamps:**
+    ```sql
+    SELECT generate_series(
+        '2026-01-01 00:00'::timestamp,
+        '2026-01-01 12:00'::timestamp,
+        '3 hours'
+    );
+    ```
+    *Output: 2026-01-01 00:00, 2026-01-01 03:00, 2026-01-01 06:00, 2026-01-01 09:00, 2026-01-01 12:00*
 
 
 
 
-Commands
 
-\d
 
-show tables
+## Useful psql Commands
+
+Here are some commonly used `psql` commands to help you navigate and inspect your database.
+
+| Command | Description | Example |
+| :--- | :--- | :--- |
+| `\d` | List relations (tables, views, sequences) or describe a specific relation. | `\d` (list all)<br>`\d trades` (describe 'trades' table) |
+| `\dt` | List all tables in the current database. | `\dt` |
+| `\l` | List all databases on the server. | `\l` |
+| `\c <dbname>` | Connect to a different database. | `\c postgres` |
+| `\du` | List all roles (users) and their attributes. | `\du` |
+| `\q` | Quit the `psql` shell. | `\q` |
+
 
 
