@@ -62,6 +62,22 @@ The `generate_series` function is essential for generating large sets of mock da
     ```
     *Output: 2026-01-01 00:00, 2026-01-01 03:00, 2026-01-01 06:00, 2026-01-01 09:00, 2026-01-01 12:00*
 
+### Generating Trades Data
+
+You can combine `generate_series` with `random()` to populate the `trades` table with thousands of rows of realistic-looking data.
+
+```sql
+INSERT INTO trades (id, buyer_id, symbol, order_quantity, bid_price, order_time)
+SELECT 
+    id,
+    floor(random() * 100 + 1)::int,                          -- Random buyer_id between 1 and 100
+    (ARRAY['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA'])[floor(random() * 5 + 1)], -- Random symbol
+    floor(random() * 1000 + 1)::int,                        -- Random quantity between 1 and 1000
+    (random() * 500 + 10)::numeric(5,2),                    -- Random price between 10.00 and 510.00
+    now() - (random() * interval '30 days')                 -- Random time in the last 30 days
+FROM generate_series(1, 1000) AS id;
+```
+
 
 
 
